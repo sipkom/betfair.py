@@ -59,6 +59,7 @@ RunnerStatus = Enum(
         'ACTIVE',
         'WINNER',
         'LOSER',
+        'PLACED',
         'REMOVED_VACANT',
         'REMOVED',
         'HIDDEN',
@@ -82,8 +83,10 @@ Side = Enum(
 
 OrderStatus = Enum(
     'OrderStatus', [
+        'PENDING',
         'EXECUTION_COMPLETE',
         'EXECUTABLE',
+        'EXPIRED',
     ]
 )
 
@@ -163,6 +166,9 @@ ExecutionReportErrorCode = Enum(
         'NO_ACTION_REQUIRED',
         'SERVICE_UNAVAILABLE',
         'REJECTED_BY_REGULATOR',
+        'NO_CHASING',
+        'REGULATOR_IS_NOT_AVAILABLE',
+        'TOO_MANY_INSTRUCTIONS',
     ]
 )
 
@@ -204,6 +210,12 @@ InstructionReportErrorCode = Enum(
         'CANCELLED_NOT_PLACED',
         'RELATED_ACTION_FAILED',
         'NO_ACTION_REQUIRED',
+        'TIME_IN_FORCE_CONFLICT',
+        'UNEXPECTED_PERSISTENCE_TYPE',
+        'INVALID_ORDER_TYPE',
+        'UNEXPECTED_MIN_FILL_SIZE',
+        'INVALID_CUSTOMER_ORDER_REF',
+        'INVALID_MIN_FILL_SIZE',
     ]
 )
 
