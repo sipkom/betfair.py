@@ -282,3 +282,22 @@ ItemClass = Enum(
         'UNKNOWN',
     ]
 )
+
+EventStatus = Enum(
+    'EventStatus', [
+        'FINISHED',
+        'IN_PROGRESS',
+        'PENDING',
+    ]
+)
+
+ResponseCode = Enum(
+    'ResponseCode', [
+        'OK',
+        'NO_NEW_UPDATES',
+        'NO_LIVE_DATA_AVAILABLE',
+        'SERVICE_UNAVAILABLE',
+        'UNEXPECTED_ERROR',
+        'LIVE_DATA_TEMPORARILY_UNAVAILABLE',
+    ]
+)

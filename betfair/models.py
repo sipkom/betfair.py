@@ -479,3 +479,31 @@ class CurrencyRate(BetfairModel):
 
 class TransferResponse(BetfairModel):
     transaction_id = StringType()
+
+
+# Scores
+
+
+class UpdateKey(BetfairModel):
+    event_id = StringType(required=True)
+    last_update_sequence_processed = StringType()
+
+
+class UpdateContext(BetfairModel):
+    event_time = StringType()
+    last_updated = DateTimeType(required=True)
+    update_sequence = LongType(required=True)
+    update_type = StringType(required=True)
+
+
+class Incident(BetfairModel):
+    update_context = ModelType(UpdateContext, required=True)
+    values = DictType(StringType)
+
+
+class Incidents(BetfairModel):
+    event_id = StringType(required=True)
+    event_type_id = StringType()
+    event_status = EnumType(constants.EventStatus)
+    response_code = EnumType(constants.ResponseCode)
+    incidents = DictType(ModelType(Incident))

@@ -31,6 +31,10 @@ ACCOUNT_API_URLS = collections.defaultdict(
     australia='https://api-au.betfair.com/exchange/account/json-rpc/v1',
 )
 
+SCORE_API_URLS = collections.defaultdict(
+    lambda: 'https://api.betfair.com/exchange/scores/json-rpc/v1',
+)
+
 
 class Betfair(object):
     """Betfair API client.
@@ -66,6 +70,10 @@ class Betfair(object):
         return ACCOUNT_API_URLS[self.locale]
 
     @property
+    def score_api_url(self):
+        return SCORE_API_URLS[self.locale]
+
+    @property
     def headers(self):
         return {
             'X-Application': self.app_key,
@@ -73,6 +81,12 @@ class Betfair(object):
             'Content-Type': self.content_type,
             'Accept': 'application/json',
         }
+
+    def get_api_url(self, base):
+        return {
+            "Account": self.account_api_url,
+            "Scores": self.score_api_url,
+        }.get(base, self.betting_api_url)
 
     def make_auth_request(self, method):
         response = self.session.post(
@@ -88,7 +102,7 @@ class Betfair(object):
     def make_api_request(self, base, method, params, codes=None, model=None):
         payload = utils.make_payload(base, method, params)
         response = self.session.post(
-            self.betting_api_url if base == "Sports" else self.account_api_url,
+            self.get_api_url(base),
             data=json.dumps(payload, cls=utils.BetfairEncoder),
             headers=self.headers,
             timeout=self.timeout,
@@ -523,4 +537,19 @@ class Betfair(object):
             'transferFunds',
             utils.get_kwargs(locals()),
             model=models.TransferResponse,
+        )
+
+    # Score API methods
+
+    @utils.requires_login
+    def list_incidents(self, update_keys):
+        """Returns a list of incidents for the given events.
+
+        :param list update_keys: List of `UpdateKey` objects
+        """
+        return self.make_api_request(
+            'Scores',
+            'listIncidents',
+            utils.get_kwargs(locals()),
+            model=models.Incidents,
         )
