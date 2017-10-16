@@ -404,7 +404,7 @@ class Betfair(object):
         )
 
     @utils.requires_login
-    def place_orders(self, market_id, instructions, customer_ref=None):
+    def place_orders(self, market_id, instructions, customer_ref=None, async=False):
         """Place new orders into market. This operation is atomic in that all
         orders will be placed or none will be placed.
 
@@ -436,7 +436,7 @@ class Betfair(object):
         )
 
     @utils.requires_login
-    def replace_orders(self, market_id, instructions, customer_ref=None):
+    def replace_orders(self, market_id, instructions, customer_ref=None, async=False):
         """This operation is logically a bulk cancel followed by a bulk place.
         The cancel is completed first then the new orders are placed.
 
