@@ -134,6 +134,7 @@ class Order(BetfairModel):
     size_lapsed = FloatType()
     size_cancelled = FloatType()
     size_voided = FloatType()
+    customer_order_ref = StringType()
 
 
 class Match(BetfairModel):
@@ -273,6 +274,7 @@ class PlaceInstruction(BetfairModel):
     limit_order = ModelType(LimitOrder)
     limit_on_close_order = ModelType(LimitOnCloseOrder)
     market_on_close_order = ModelType(MarketOnCloseOrder)
+    customer_order_ref = StringType()
 
 
 class CancelInstruction(BetfairModel):
